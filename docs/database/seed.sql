@@ -1,4 +1,5 @@
--- Inserindo um administrador e um cliente
+-- seed.sql
+-- Inserindo um administrador e um cliente 
 INSERT INTO usuarios (nome, email, senha, tipo) VALUES 
 ('Admin Geral', 'admin@locadora.com', '123456', 'admin'),
 ('Ricardo', 'ricardo@email.com', 'senha123', 'cliente');

@@ -1,4 +1,5 @@
--- Criação do banco de dados
+-- --schema.sql
+-- Criação do banco de dados 
 CREATE DATABASE IF NOT EXISTS locadora_carros;
 USE locadora_carros;
 
