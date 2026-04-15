@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../config/database.php';
+//login.php
 session_start();
 ?>
 <!DOCTYPE html>
@@ -7,7 +9,7 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Driver Lux | Login</title>
-    <link rel="stylesheet" href="./login.css">
+    <link rel="stylesheet" href="style/login.css">
 </head>
 <body>
     <div class="login-page">
@@ -16,7 +18,7 @@ session_start();
         <div class="login-container">
             <div class="brand-area">
                 <div class="logo-area">
-                    <img src="./logo-dark.png" alt="Driver Lux" class="logo-img">
+                    <img src="image/logo-dark.png" alt="Driver Lux" class="logo-img">
 
                     <p class="logo-text">
                         Aluguel de carros de luxo com sofisticação, conforto e exclusividade.
