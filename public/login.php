@@ -1,4 +1,5 @@
 <?php
+// login.php - Página de login para clientes
 require_once __DIR__ . '/../config/database.php';
 //login.php
 session_start();

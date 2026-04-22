@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../config/database.php';
 
-
+// carro.php - funções para gerenciar os carros
 // =-=-=-=-=-=-=-=-==--=
 // LISTAR carros
 // =-=-=-=-=-=-=-=-==--=

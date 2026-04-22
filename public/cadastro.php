@@ -1,4 +1,5 @@
 <?php
+// cadastro.php - Página de cadastro de clientes
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../modules/cliente/cliente.php';
 session_start();

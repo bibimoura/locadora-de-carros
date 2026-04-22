@@ -1,4 +1,5 @@
 <?php
+// config/database.php - Configurações para conectar ao banco de dados
 // Configurações do Banco de Dados da Locadora
 $host = 'localhost';
 $db   = 'locadora_carros';
