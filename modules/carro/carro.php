@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../config/database.php';
 
-
+// carro.php - funções para gerenciar os carros
 // =-=-=-=-=-=-=-=-==--=
 // LISTAR carros
 // =-=-=-=-=-=-=-=-==--=
@@ -11,7 +11,7 @@ function listarCarros(): array {
     global $conexao;
     // percorre todos os resultados e retorna tudo de uma vez
     $stmt = $conexao->query(
-        "SELECT id, marca, modelo, ano, placa, url_foto, valor_diaria, status, criado_em
+        "SELECT id, marca, modelo, ano, placa, valor_diaria, status, criado_em
          FROM carros
          ORDER BY id ASC"
     );
@@ -22,11 +22,11 @@ function listarCarros(): array {
 // CRIAR um novo carro 
 // =-=-=-=-=-=-=-=-==--=
 
-function criarCarro( string $marca, string $modelo, int $ano, string $placa, float $valor_diaria, string $status = 'disponivel', ?string $url_foto = null): array {
+function criarCarro(string $marca, string $modelo, int $ano, string $placa, float $valor_diaria, string $status = 'disponivel'): array {
     global $conexao;
 
     // verificar os dados do novo carro
-    validarDadosCarro($marca, $modelo, $ano, $placa, $valor_diaria, $status, $url_foto);
+    validarDadosCarro($marca, $modelo, $ano, $placa, $valor_diaria, $status);
 
     // verifica se a placa já existe
     $check = $conexao->prepare("SELECT id FROM carros WHERE placa = :placa");
@@ -37,18 +37,16 @@ function criarCarro( string $marca, string $modelo, int $ano, string $placa, flo
 
     // insere o carro no banco
     $stmt = $conexao->prepare(
-    "INSERT INTO carros (marca, modelo, ano, placa, url_foto, valor_diaria, status)
-     VALUES (:marca, :modelo, :ano, :placa, :url_foto, :valor_diaria, :status)"
+        "INSERT INTO carros (marca, modelo, ano, placa, valor_diaria, status)
+         VALUES (:marca, :modelo, :ano, :placa, :valor_diaria, :status)"
     );
-
     $stmt->execute([
-    ':marca'         => trim($marca),
-    ':modelo'        => trim($modelo),
-    ':ano'           => $ano,
-    ':placa'         => strtoupper(trim($placa)),
-    ':url_foto'      => $url_foto,
-    ':valor_diaria'  => $valor_diaria,
-    ':status'        => $status,
+        ':marca'         => trim($marca),
+        ':modelo'        => trim($modelo),
+        ':ano'           => $ano,
+        ':placa'         => strtoupper(trim($placa)),
+        ':valor_diaria'  => $valor_diaria,
+        ':status'        => $status,
     ]);
 
     return buscarCarro((int) $conexao->lastInsertId());
@@ -61,7 +59,7 @@ function criarCarro( string $marca, string $modelo, int $ano, string $placa, flo
 function buscarCarro(int $id) {
     global $conexao;
 
-    $sql = "SELECT id, marca, modelo, ano, placa, url_foto, valor_diaria, status, criado_em
+    $sql = "SELECT id, marca, modelo, ano, placa, valor_diaria, status, criado_em
             FROM carros 
             WHERE id = :id";
 
@@ -93,11 +91,11 @@ function deletarCarro(int $id): bool {
 // ATUALIZAR um carro
 // =-=-=-=-=-=-=-=-==--=
 
-function atualizarCarro(int $id, string $marca, string $modelo, int $ano, string $placa, float $valor_diaria, string $status, ?string $url_foto = null): array {
+function atualizarCarro(int $id, string $marca, string $modelo, int $ano, string $placa, float $valor_diaria, string $status): array {
     global $conexao;
 
     // verificar os dados
-    validarDadosCarro($marca, $modelo, $ano, $placa, $valor_diaria, $status, $url_foto);
+    validarDadosCarro($marca, $modelo, $ano, $placa, $valor_diaria, $status);
 
     // caso o carro não seja encontrado
     if (!buscarCarro($id)) {
@@ -106,21 +104,19 @@ function atualizarCarro(int $id, string $marca, string $modelo, int $ano, string
 
     // envia o query para o banco de dados
     $sql = "UPDATE carros 
-        SET marca = :marca, modelo = :modelo, ano = :ano, placa = :placa, 
-            url_foto = :url_foto, valor_diaria = :valor_diaria, status = :status
-        WHERE id = :id";
+            SET marca = :marca, modelo = :modelo, ano = :ano, placa = :placa, valor_diaria = :valor_diaria, status = :status
+            WHERE id = :id";
     
     $stmt = $conexao->prepare($sql);
     // preenche as lacunas
     $stmt->execute([
-    ':marca'         => trim($marca),
-    ':modelo'        => trim($modelo),
-    ':ano'           => $ano,
-    ':placa'         => strtoupper(trim($placa)),
-    ':url_foto'      => $url_foto,
-    ':valor_diaria'  => $valor_diaria,
-    ':status'        => $status,
-    ':id'            => $id,
+        ':marca'         => trim($marca),
+        ':modelo'        => trim($modelo),
+        ':ano'           => $ano,
+        ':placa'         => strtoupper(trim($placa)),
+        ':valor_diaria'  => $valor_diaria,
+        ':status'        => $status,
+        ':id'            => $id,
     ]);
 
     return buscarCarro($id);
@@ -130,7 +126,7 @@ function atualizarCarro(int $id, string $marca, string $modelo, int $ano, string
 // VALIDAÇÃO de dados
 // =-=-=-=-=-=-=-=-==--=
 
-function validarDadosCarro( string $marca, string $modelo, int $ano, string $placa, float $valor_diaria, string $status, ?string $url_foto = null): void {
+function validarDadosCarro(string $marca, string $modelo, int $ano, string $placa, float $valor_diaria, string $status): void {
 
     // marca
     if (empty(trim($marca))) {
@@ -160,10 +156,5 @@ function validarDadosCarro( string $marca, string $modelo, int $ano, string $pla
     // status
     if (!in_array($status, ['disponivel', 'alugado', 'manutencao'], true)) {
         throw new InvalidArgumentException('Status inválido. Use "disponivel", "alugado" ou "manutencao".');
-    }
-
-    // url_foto (opcional)
-    if ($url_foto !== null && !filter_var($url_foto, FILTER_VALIDATE_URL) && !str_starts_with($url_foto, 'uploads/')) {
-    throw new InvalidArgumentException('URL da foto inválida.');
     }
 }

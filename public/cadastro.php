@@ -1,7 +1,16 @@
 <?php
+// pages/cadastro.php - Página de cadastro de clientes
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../modules/cliente/cliente.php';
+require_once __DIR__ . '/../modules/auth/auth.php';
+
 session_start();
+
+// Se já está logado, redireciona para home
+if (estaLogado()) {
+    header('Location: ./home.php');
+    exit;
+}
 
 $erro = '';
 $sucesso = '';
@@ -17,16 +26,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             throw new InvalidArgumentException('As senhas não coincidem.');
         }
 
-        criarCliente($nome, $email, $senha);
+        // Cria o cliente
+        $cliente = criarCliente($nome, $email, $senha);
 
-        $sucesso = 'Cadastro realizado com sucesso!';
+        // Faz login automático
+        $_SESSION['usuario_id'] = $cliente['id'];
+        $_SESSION['usuario_nome'] = $cliente['nome'];
+        $_SESSION['usuario_email'] = $cliente['email'];
+        $_SESSION['usuario_tipo'] = 'cliente';
 
-        // opcional: limpar os campos após cadastrar
-        $_POST = [];
-
-        // se quiser redirecionar para login, use isso no lugar da mensagem:
-        // header('Location: ./login.php');
-        // exit;
+        // Redireciona para home
+        header('Location: ./home.php');
+        exit;
 
     } catch (Throwable $e) {
         $erro = $e->getMessage();
@@ -60,13 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <?php if (!empty($erro)): ?>
                     <p style="color: #ff6b6b; margin-bottom: 15px;">
-                        <?= htmlspecialchars($erro) ?>
-                    </p>
-                <?php endif; ?>
-
-                <?php if (!empty($sucesso)): ?>
-                    <p style="color: #7CFC98; margin-bottom: 15px;">
-                        <?= htmlspecialchars($sucesso) ?>
+                        ⚠️ <?= htmlspecialchars($erro) ?>
                     </p>
                 <?php endif; ?>
 
