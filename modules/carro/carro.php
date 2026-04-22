@@ -148,7 +148,7 @@ function validarDadosCarro( string $marca, string $modelo, int $ano, string $pla
     }
 
     // placa
-    if (empty(trim($placa)) || strlen(trim($placa)) !== 10) {
+    if (empty(trim($placa)) || strlen(trim($placa)) !== 7) {
         throw new InvalidArgumentException('Placa inválida. Deve conter 10 caracteres.');
     }
 

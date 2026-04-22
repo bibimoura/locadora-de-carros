@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --roxo-principal: #6b00cc;
+    --roxo-escuro: #2b0a4a;
+    --amarelo: #f4c542;
+    --preto: #0f0f14;
+    --cinza-escuro: #1b1b24;
+    --cinza-claro: #d9d9e0;
+    --branco: #ffffff;
+}
+
+body {
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    background-color: var(--preto);
+    color: var(--branco);
+}
+
+.cadastro-page {
+    min-height: 100vh;
+    background:
+        linear-gradient(rgba(15, 15, 20, 0.82), rgba(15, 15, 20, 0.90)),
+        url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1400&q=80");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.cadastro-container {
+    width: 100%;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: 1000px;
+    gap: 40px;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.brand-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.logo-img {
+    width: 800px;
+    max-width: none;
+    height: auto;
+    display: block;
+}
+
+.logo-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: #f3f3f8;
+    max-width: 540px;
+    line-height: 1.5;
+    margin-top: -120px;
+    letter-spacing: 0.2px;
+}
+
+.cadastro-card {
+    background: rgba(27, 27, 36, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 35px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(8px);
+}
+
+.cadastro-card h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--branco);
+}
+
+.subtitle {
+    color: var(--cinza-claro);
+    margin-bottom: 25px;
+    font-size: 1rem;
+}
+
+.cadastro-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 0.95rem;
+    color: var(--cinza-claro);
+}
+
+.input-group input {
+    height: 48px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 10px;
+    padding: 0 14px;
+    background-color: rgba(255, 255, 255, 0.04);
+    color: var(--branco);
+    outline: none;
+    transition: 0.3s;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+}
+
+.input-group input:focus {
+    border-color: var(--roxo-principal);
+    box-shadow: 0 0 0 3px rgba(107, 0, 204, 0.18);
+}
+
+.btn-cadastro {
+    height: 50px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--roxo-principal), #8d39e6);
+    color: var(--branco);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 8px;
+}
+
+.btn-cadastro:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+.login-link {
+    margin-top: 22px;
+    text-align: center;
+    color: var(--cinza-claro);
+    font-size: 0.95rem;
+}
+
+.login-link a {
+    color: var(--amarelo);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+    .cadastro-container {
+        grid-template-columns: 1fr;
+    }
+
+    .logo-img {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .logo-text {
+        margin-top: -20px;
+    }
+}
+
+@media (max-width: 500px) {
+    .cadastro-card {
+        padding: 24px;
+    }
+
+    .logo-img {
+        max-width: 320px;
+    }
+
+    .logo-text {
+        font-size: 1rem;
+        margin-top: -10px;
+    }
+}
