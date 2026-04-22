@@ -3,6 +3,27 @@ require_once __DIR__ . '/../config/database.php';
 //login.php
 session_start();
 ?>
+
+
+<?php
+// login.php
+require_once __DIR__ . '/../includes/auth.php';
+
+$erro = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? '';
+    $senha = $_POST['senha'] ?? '';
+
+    if (realizarLogin($email, $senha)) {
+        header('Location: index.php'); 
+        exit;
+    } else {
+        $erro = 'E-mail ou senha incorretos.';
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -30,6 +51,11 @@ session_start();
                 <h2>Entrar</h2>
                 <p class="subtitle">Acesse sua conta para continuar</p>
 
+                <?php if (!empty($erro)): ?>
+                    <p style="color: #ff6b6b; margin-bottom: 15px; text-align: center;">
+                        <?= htmlspecialchars($erro) ?>
+                    </p>
+                <?php endif; ?>
                 <form action="" method="POST" class="login-form">
                     <div class="input-group">
                         <label for="email">E-mail</label>
