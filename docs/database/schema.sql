@@ -20,6 +20,7 @@ CREATE TABLE carros (
     modelo VARCHAR(50) NOT NULL,
     ano INT NOT NULL,
     placa VARCHAR(10) NOT NULL UNIQUE,
+    url_foto VARCHAR(255) NOT NULL,
     valor_diaria DECIMAL(10, 2) NOT NULL,
     status ENUM('disponivel', 'alugado', 'manutencao') DEFAULT 'disponivel',
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
